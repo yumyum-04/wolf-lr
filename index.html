@@ -107,6 +107,22 @@ h1{font-size:26px;text-align:center;color:var(--wine);margin:0 0 34px;font-weigh
 #capture .counter {
   font-size: 9px;
 }
+  /* L/R 선택 항목 완전히 숨기기 */
+.gauge-head,
+.gauge,
+.choices {
+  display: none !important;
+}
+/* 인물 영역 정렬 */
+.person {
+  grid-template-columns: 88px minmax(0, 1fr) !important;
+  gap: 12px !important;
+}
+/* 사진 크기 */
+.avatar {
+  width: 82px !important;
+  height: 82px !important;
+}
 </style>
 </head>
 <body>
