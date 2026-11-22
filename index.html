@@ -58,6 +58,55 @@ h1{font-size:26px;text-align:center;color:var(--wine);margin:0 0 34px;font-weigh
 @media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}.person{grid-template-columns:88px minmax(0,1fr)}.avatar{width:84px;height:84px}}
 @media(max-width:650px){.topbar{padding:10px 12px}.wrap{padding:12px 10px 28px;margin:0}.paper{padding:24px 14px 18px;border-radius:0}.grid{grid-template-columns:1fr;gap:22px}.person{grid-template-columns:78px minmax(0,1fr);gap:10px}.avatar{width:74px;height:74px}.logo{margin-bottom:12px}h1{font-size:21px;margin-bottom:22px}.reason{min-height:92px}.reason textarea{height:62px}}
 @media print{body{background:#fff}.topbar,.pagebar,.admin-panel,.status,.choices,.admin-edit{display:none!important}.wrap{margin:0;padding:0;max-width:none}.paper{box-shadow:none;border-radius:0;padding:25px}.grid{gap:26px 20px}.reason textarea{overflow:hidden}.person{break-inside:avoid}}
+  /* L/R 게이지와 수치 체크 영역 완전 제거 */
+.gauge-head {
+  display: none !important;
+}
+/* PNG 내보내기 디자인 */
+#capture {
+  background: #fff !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 30px 28px !important;
+}
+/* 상단 로고와 제목 제거 */
+#capture .logo,
+#capture h1 {
+  display: none !important;
+}
+/* 3열 가로형 배치 */
+#capture .grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px 26px;
+}
+#capture .person {
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 12px;
+}
+#capture .avatar {
+  width: 82px;
+  height: 82px;
+}
+/* PNG에서는 선택 버튼 숨기기 */
+#capture .choices {
+  display: none !important;
+}
+/* 사유 입력 영역 */
+#capture .reason {
+  min-height: 88px;
+  border: 1px solid #dedede;
+  border-radius: 7px;
+  padding: 8px 10px;
+}
+#capture .reason textarea {
+  height: 66px;
+  font-size: 12px;
+  resize: none;
+}
+#capture .counter {
+  font-size: 9px;
+}
 </style>
 </head>
 <body>
