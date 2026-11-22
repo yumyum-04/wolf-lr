@@ -2,127 +2,86 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>늑페스 왼른 취향표</title>
-<meta name="description" content="늑페스 왼른 취향표 작성 사이트">
+<meta name="description" content="늑페스 왼른 취향표">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--wine:#52002f;--ink:#250018;--line:#dedede;--muted:#b8cbd1;--bg:#fff}
-*{box-sizing:border-box}body{margin:0;background:#f6f5f6;color:#222;font-family:"Noto Sans KR",sans-serif}
+:root{--wine:#52002f;--ink:#250018;--line:#dedede;--muted:#aebfc5;--bg:#f6f5f6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#222;font-family:"Noto Sans KR",sans-serif}
 button,input,textarea{font:inherit}button{cursor:pointer}
-.topbar{background:#fff;border-bottom:1px solid #eee;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:5}
-.brand{font-weight:800;letter-spacing:.02em;color:#111}.top-actions{display:flex;gap:8px;flex-wrap:wrap}
-.btn{border:1px solid #ddd;background:#fff;border-radius:9px;padding:9px 13px;font-size:13px;color:#333}
-.btn.primary{background:var(--wine);border-color:var(--wine);color:#fff}.btn.dark{background:#222;color:#fff;border-color:#222}
+.topbar{background:#fff;border-bottom:1px solid #eee;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;position:sticky;top:0;z-index:5}
+.brand{font-weight:800;font-size:19px;color:#111;line-height:1.35}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid #ddd;background:#fff;border-radius:10px;padding:11px 15px;font-size:14px;color:#333}
+.btn.primary{background:var(--wine);border-color:var(--wine);color:#fff}
+.btn.dark{background:#222;color:#fff;border-color:#222}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.wrap{max-width:1500px;margin:24px auto;padding:0 22px 40px}
-.paper{background:#fff;padding:36px 34px 24px;border-radius:14px;box-shadow:0 4px 24px #2100150a}
-.logo{font-size:clamp(34px,5vw,66px);font-weight:800;letter-spacing:-.07em;text-align:center;color:#050505;line-height:1.1;margin:0 0 18px}
-h1{font-size:26px;text-align:center;color:var(--wine);margin:0 0 34px;font-weight:800}
-.pagebar{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 22px;flex-wrap:wrap}
-.pagebtn{width:34px;height:34px;border:1px solid #ddd;background:#fff;border-radius:8px;color:#555}
+.wrap{max-width:1500px;margin:24px auto;padding:0 22px 42px}
+.admin-panel{display:none;background:#fff;border:1px solid #e5d9e0;padding:18px;border-radius:14px;margin-bottom:20px}
+.admin .admin-panel{display:block}
+.admin-panel h2{margin:0 0 8px;font-size:18px;color:var(--wine)}
+.admin-panel p{font-size:14px;color:#666;line-height:1.7;margin:6px 0 14px}
+.pagebar{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.pagebtn{width:44px;height:44px;border:1px solid #ddd;background:#fff;border-radius:10px;color:#555;font-size:17px}
 .pagebtn.active{background:var(--wine);color:#fff;border-color:var(--wine)}
+.paper{background:#fff;padding:36px 34px 24px;border-radius:14px;box-shadow:0 4px 24px #2100150a}
+.paper-title{font-size:clamp(25px,4vw,34px);font-weight:800;text-align:center;color:var(--wine);margin:0 0 34px}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px 30px}
 .person{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:center;min-width:0}
 .avatar{width:108px;height:108px;border-radius:50%;border:3px solid #e4e9eb;object-fit:cover;background:#edf0f1;display:block}
-.avatar-placeholder{display:flex;align-items:center;justify-content:center;font-size:30px;color:#aab4b8}
+.avatar-placeholder{display:flex;align-items:center;justify-content:center;font-size:40px;color:#aab4b8}
 .person-main{min-width:0}
-.gauge-head{display:flex;align-items:center;gap:7px;margin:0 0 8px;color:var(--wine);font-size:13px;font-weight:800}
-.gauge{height:29px;border:2px solid #dedede;border-radius:8px;overflow:hidden;display:grid;grid-template-columns:repeat(12,1fr);background:#fff;flex:1}
-.gauge span{border-right:1px solid #e7e7e7;background:#fff}
-.gauge span.filled{background:var(--wine)}
-.name{font-size:14px;font-weight:700;margin:0 0 7px;color:#333;min-height:20px}
-.reason{border:2px solid #dedede;border-radius:10px;min-height:108px;padding:11px 12px;position:relative;background:#fff}
-.reason textarea{width:100%;height:78px;resize:vertical;border:0;outline:0;font-size:13px;line-height:1.6;color:#222;background:transparent}
-.counter{position:absolute;right:9px;bottom:6px;font-size:10px;color:var(--muted);font-weight:700}
-.choices{display:flex;gap:7px;margin:0 0 7px}
-.choice{flex:1;border:1px solid #ddd;background:#fff;border-radius:7px;padding:7px;font-size:12px;color:#666;font-weight:700}
+.name{font-size:17px;font-weight:700;margin:0 0 9px;color:#333;min-height:23px;overflow-wrap:anywhere}
+.choices{display:flex;gap:8px;margin:0 0 9px}
+.choice{flex:1;border:1px solid #ddd;background:#fff;border-radius:8px;padding:9px 7px;font-size:14px;color:#666;font-weight:700}
 .choice.selected{background:var(--wine);color:#fff;border-color:var(--wine)}
-.admin-edit{display:none;background:#fbf8fa;border:1px dashed #c9a9bb;padding:10px;border-radius:9px;margin-top:8px}
+.reason{border:2px solid #dedede;border-radius:11px;min-height:112px;padding:10px 12px;position:relative;background:#fff}
+.reason textarea{width:100%;height:78px;resize:vertical;border:0;outline:0;font-size:13px;line-height:1.6;color:#222;background:transparent}
+.counter{position:absolute;right:9px;bottom:6px;font-size:11px;color:var(--muted);font-weight:700}
+.admin-edit{display:none;background:#fbf8fa;border:1px dashed #c9a9bb;padding:11px;border-radius:9px;margin-top:9px}
 .admin .admin-edit{display:block}
-.admin-edit input{width:100%;margin:3px 0 7px;padding:7px;border:1px solid #ddd;border-radius:6px;font-size:12px;background:#fff}
-.admin-edit label{font-size:11px;color:#6b5261;font-weight:700}
-.footer{text-align:center;color:#aaa;font-size:13px;font-weight:700;margin:24px 0 0}
-.status{text-align:center;color:#777;font-size:12px;margin:12px 0}
-.admin-panel{display:none;background:#fff;border:1px solid #e5d9e0;padding:16px;border-radius:12px;margin-bottom:18px}
-.admin .admin-panel{display:block}
-.admin-panel h2{margin:0 0 8px;font-size:16px;color:var(--wine)}
-.admin-panel p{font-size:12px;color:#666;line-height:1.6;margin:6px 0 12px}
+.admin-edit input{width:100%;margin:4px 0 8px;padding:9px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:#fff}
+.admin-edit label{font-size:12px;color:#6b5261;font-weight:700}
+.footer{text-align:center;color:#aaa;font-size:14px;font-weight:700;margin:28px 0 0}
+.status{text-align:center;color:#777;font-size:13px;line-height:1.6;margin:14px 0}
 .modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
-.modal.show{display:flex}.modalbox{background:#fff;border-radius:14px;padding:22px;width:min(420px,100%)}
-.modalbox h2{margin:0 0 14px;font-size:19px}.modalbox input{width:100%;padding:11px;border:1px solid #ddd;border-radius:8px;margin:5px 0 12px}
+.modal.show{display:flex}
+.modalbox{background:#fff;border-radius:15px;padding:23px;width:min(430px,100%)}
+.modalbox h2{margin:0 0 15px;font-size:20px}
+.modalbox input{width:100%;padding:12px;border:1px solid #ddd;border-radius:9px;margin:6px 0 13px}
 .modalbox .row{display:flex;gap:8px;justify-content:flex-end}
-.hint{font-size:12px;color:#777;line-height:1.6}
+.hint{font-size:13px;color:#777;line-height:1.6}
+.empty{grid-column:1/-1;text-align:center;color:#999;padding:50px 10px}
+.export-mode{width:1500px!important;max-width:none!important;padding:40px!important;background:#fff!important;border-radius:0!important;box-shadow:none!important}
+.export-mode .grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:34px 30px!important}
+.export-mode .person{display:grid!important;grid-template-columns:112px minmax(0,1fr)!important;gap:14px!important}
+.export-mode .avatar{width:108px!important;height:108px!important}
+.export-mode .choices,.export-mode .admin-edit{display:none!important}
+.export-mode .name{font-size:17px!important;margin-bottom:10px!important}
+.export-mode .reason{min-height:112px!important;padding:12px!important;border:2px solid #dedede!important}
+.export-mode .export-reason{font-size:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;min-height:78px;color:#222}
+.export-mode .paper-title{font-size:34px!important;margin-bottom:34px!important}
+.export-mode .footer{margin-top:28px!important}
 @media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}.person{grid-template-columns:88px minmax(0,1fr)}.avatar{width:84px;height:84px}}
-@media(max-width:650px){.topbar{padding:10px 12px}.wrap{padding:12px 10px 28px;margin:0}.paper{padding:24px 14px 18px;border-radius:0}.grid{grid-template-columns:1fr;gap:22px}.person{grid-template-columns:78px minmax(0,1fr);gap:10px}.avatar{width:74px;height:74px}.logo{margin-bottom:12px}h1{font-size:21px;margin-bottom:22px}.reason{min-height:92px}.reason textarea{height:62px}}
-@media print{body{background:#fff}.topbar,.pagebar,.admin-panel,.status,.choices,.admin-edit{display:none!important}.wrap{margin:0;padding:0;max-width:none}.paper{box-shadow:none;border-radius:0;padding:25px}.grid{gap:26px 20px}.reason textarea{overflow:hidden}.person{break-inside:avoid}}
-  /* L/R 게이지와 수치 체크 영역 완전 제거 */
-.gauge-head {
-  display: none !important;
+@media(max-width:650px){
+ .topbar{padding:10px 12px;align-items:flex-start;flex-direction:column}
+ .brand{font-size:17px}
+ .top-actions{width:100%}.top-actions .btn{flex:1;font-size:13px;padding:10px 8px}
+ .wrap{padding:12px 10px 28px;margin:0}
+ .paper{padding:25px 14px 20px;border-radius:10px}
+ .grid{grid-template-columns:1fr;gap:24px}
+ .person{grid-template-columns:78px minmax(0,1fr);gap:11px}
+ .avatar{width:74px;height:74px}
+ .paper-title{font-size:23px;margin-bottom:24px}
+ .name{font-size:15px}
+ .reason{min-height:98px}.reason textarea{height:66px}
+ .pagebtn{width:40px;height:40px}
 }
-/* PNG 내보내기 디자인 */
-#capture {
-  background: #fff !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  padding: 30px 28px !important;
-}
-/* 상단 로고와 제목 제거 */
-#capture .logo,
-#capture h1 {
-  display: none !important;
-}
-/* 3열 가로형 배치 */
-#capture .grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px 26px;
-}
-#capture .person {
-  grid-template-columns: 88px minmax(0, 1fr);
-  gap: 12px;
-}
-#capture .avatar {
-  width: 82px;
-  height: 82px;
-}
-/* PNG에서는 선택 버튼 숨기기 */
-#capture .choices {
-  display: none !important;
-}
-/* 사유 입력 영역 */
-#capture .reason {
-  min-height: 88px;
-  border: 1px solid #dedede;
-  border-radius: 7px;
-  padding: 8px 10px;
-}
-#capture .reason textarea {
-  height: 66px;
-  font-size: 12px;
-  resize: none;
-}
-#capture .counter {
-  font-size: 9px;
-}
-  /* L/R 선택 항목 완전히 숨기기 */
-.gauge-head,
-.gauge,
-.choices {
-  display: none !important;
-}
-/* 인물 영역 정렬 */
-.person {
-  grid-template-columns: 88px minmax(0, 1fr) !important;
-  gap: 12px !important;
-}
-/* 사진 크기 */
-.avatar {
-  width: 82px !important;
-  height: 82px !important;
-}
+@media print{.topbar,.pagebar,.admin-panel,.status,.choices,.admin-edit{display:none!important}.wrap{margin:0;padding:0;max-width:none}.paper{box-shadow:none;border-radius:0;padding:25px}}
 </style>
 </head>
 <body>
@@ -135,166 +94,332 @@ h1{font-size:26px;text-align:center;color:var(--wine);margin:0 0 34px;font-weigh
     <button class="btn dark" id="exportBtn">현재 페이지 PNG 저장</button>
   </div>
 </header>
+
 <main class="wrap">
   <section class="admin-panel" id="adminPanel">
     <h2>제작자 관리</h2>
-    <p>이 화면에서만 인물의 이름과 사진을 등록·수정할 수 있습니다. 1페이지는 4명, 2~11페이지는 각 9명입니다. 사진은 Supabase Storage에 업로드됩니다.</p>
+    <p>제작자만 인물 이름과 사진을 등록·수정할 수 있습니다. 1페이지는 4명, 2~11페이지는 각 9명입니다. 사진은 Supabase Storage에 저장됩니다.</p>
     <div class="top-actions">
       <button class="btn primary" id="initMembers">94명 기본 칸 만들기</button>
       <button class="btn" id="refreshMembers">인물 목록 새로고침</button>
     </div>
   </section>
+
   <nav class="pagebar" id="pagebar" aria-label="페이지 선택"></nav>
+
   <section class="paper" id="capture">
-    <div class="logo">늑페스</div>
-    <h1>활동기별 왼른 취향표</h1>
+    <h1 class="paper-title">늑페스 왼른 취향표</h1>
     <div class="grid" id="peopleGrid"></div>
-    <div class="footer">활동기별 왼른 취향표</div>
+    <div class="footer">늑페스 왼른 취향표</div>
   </section>
   <div class="status" id="status">페이지를 선택하고 취향을 작성해 주세요.</div>
 </main>
+
 <div class="modal" id="loginModal">
   <div class="modalbox">
     <h2>제작자 로그인</h2>
     <label class="hint">Supabase에 등록한 제작자 이메일</label>
-    <input id="email" type="email" placeholder="이메일">
+    <input id="email" type="email" placeholder="이메일" autocomplete="username">
     <label class="hint">비밀번호</label>
-    <input id="password" type="password" placeholder="비밀번호">
-    <div class="row"><button class="btn" id="cancelLogin">취소</button><button class="btn primary" id="loginBtn">로그인</button></div>
+    <input id="password" type="password" placeholder="비밀번호" autocomplete="current-password">
+    <div class="row">
+      <button class="btn" id="cancelLogin">취소</button>
+      <button class="btn primary" id="loginBtn">로그인</button>
+    </div>
     <p class="hint">참여자는 로그인할 필요가 없습니다.</p>
   </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="config.js"></script>
 <script>
 (() => {
-const cfg = window.WOLF_CONFIG || {};
-const ready = !!(cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY);
-const db = ready ? window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_ANON_KEY) : null;
-const $ = id => document.getElementById(id);
-let page = 1, members = [], answers = {}, user = null, isAdmin = false;
-let participantId = localStorage.getItem('wolf_lr_participant');
-const status = msg => $('status').textContent = msg;
-if(!participantId){participantId = crypto.randomUUID();localStorage.setItem('wolf_lr_participant',participantId)}
-const countForPage = p => p===1?4:9;
-function renderPages(){
-  $('pagebar').innerHTML = Array.from({length:11},(_,i)=>`<button class="pagebtn ${page===i+1?'active':''}" data-page="${i+1}">${i+1}</button>`).join('');
-  $('pagebar').querySelectorAll('button').forEach(b=>b.onclick=()=>{page=+b.dataset.page;renderPages();renderPeople()});
-}
-function gauge(choice){
-  const n = choice==='L'?12:choice==='R'?0:0;
-  return `<div class="gauge">${Array.from({length:12},(_,i)=>`<span class="${choice==='L'&&i<n?'filled':choice==='R'&&i>=n?'filled':''}"></span>`).join('')}</div>`;
-}
-function renderPeople(){
-  const list = members.filter(m=>m.page_no===page).sort((a,b)=>a.sort_order-b.sort_order);
-  $('peopleGrid').innerHTML = list.map(m=>{
-    const a=answers[m.id]||{choice:'',reason:''};
-    return `<article class="person" data-id="${m.id}">
-      ${m.photo_url?`<img class="avatar" src="${esc(m.photo_url)}" alt="">`:`<div class="avatar avatar-placeholder">＋</div>`}
-      <div class="person-main">
-        <div class="gauge-head"><span>L</span>${gauge(a.choice)}<span>R</span></div>
-        <div class="name">${esc(m.name||'이름 미등록')}</div>
-        <div class="choices"><button class="choice ${a.choice==='L'?'selected':''}" data-choice="L">왼 (L)</button><button class="choice ${a.choice==='R'?'selected':''}" data-choice="R">른 (R)</button></div>
-        <div class="reason"><textarea maxlength="150" placeholder="선택한 이유를 작성해 주세요." ${isAdmin?'':' '}>${esc(a.reason||'')}</textarea><span class="counter">${(a.reason||'').length}/150</span></div>
-        <div class="admin-edit">
-          <label>인물 이름</label><input class="edit-name" value="${esc(m.name||'')}" placeholder="이름">
-          <label>프로필 사진</label><input class="edit-photo" type="file" accept="image/*">
-          <button class="btn primary save-person" style="width:100%">인물 정보 저장</button>
-        </div>
-      </div>
-    </article>`;
-  }).join('');
-  $('peopleGrid').querySelectorAll('.person').forEach(card=>{
-    const id=card.dataset.id;
-    card.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{
-      answers[id]=answers[id]||{choice:'',reason:''};answers[id].choice=b.dataset.choice;renderPeople();
+  const cfg = window.WOLF_CONFIG || {};
+  const ready = !!(cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY &&
+    !cfg.SUPABASE_URL.includes('YOUR-PROJECT') &&
+    !cfg.SUPABASE_ANON_KEY.includes('YOUR_SUPABASE'));
+  const db = ready ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY) : null;
+  const $ = id => document.getElementById(id);
+  let page = 1, members = [], answers = {}, user = null, isAdmin = false;
+
+  const status = msg => $('status').textContent = msg;
+  const countForPage = p => p === 1 ? 4 : 9;
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+
+  function renderPages() {
+    $('pagebar').innerHTML = Array.from({length:11}, (_,i) =>
+      `<button class="pagebtn ${page===i+1?'active':''}" data-page="${i+1}">${i+1}</button>`
+    ).join('');
+    $('pagebar').querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', () => {
+        page = Number(button.dataset.page);
+        renderPages();
+        renderPeople();
+      });
     });
-    const ta=card.querySelector('textarea');
-    ta.oninput=()=>{answers[id]=answers[id]||{choice:'',reason:''};answers[id].reason=ta.value;card.querySelector('.counter').textContent=ta.value.length+'/150'};
-    if(isAdmin){
-      card.querySelector('.save-person').onclick=()=>savePerson(id,card);
-      ta.disabled=true;
-      card.querySelectorAll('[data-choice]').forEach(b=>b.disabled=true);
+  }
+
+  function renderPeople() {
+    const list = members.filter(m => Number(m.page_no) === page)
+      .sort((a,b) => Number(a.sort_order)-Number(b.sort_order));
+
+    if (!list.length) {
+      $('peopleGrid').innerHTML = '<div class="empty">아직 인물 칸이 없습니다.</div>';
+      return;
+    }
+
+    $('peopleGrid').innerHTML = list.map(m => {
+      const answer = answers[m.id] || {choice:'', reason:''};
+      const photo = m.photo_url
+        ? `<img class="avatar" src="${esc(m.photo_url)}" alt="${esc(m.name || '')}">`
+        : '<div class="avatar avatar-placeholder">＋</div>';
+      return `<article class="person" data-id="${esc(m.id)}">
+        ${photo}
+        <div class="person-main">
+          <div class="name">${esc(m.name || '이름 미등록')}</div>
+          <div class="choices">
+            <button class="choice ${answer.choice==='L'?'selected':''}" data-choice="L" ${isAdmin?'disabled':''}>왼 (L)</button>
+            <button class="choice ${answer.choice==='R'?'selected':''}" data-choice="R" ${isAdmin?'disabled':''}>른 (R)</button>
+          </div>
+          <div class="reason">
+            <textarea maxlength="150" placeholder="선택한 이유를 작성해 주세요." ${isAdmin?'disabled':''}>${esc(answer.reason || '')}</textarea>
+            <span class="counter">${(answer.reason || '').length}/150</span>
+          </div>
+          <div class="admin-edit">
+            <label>인물 이름</label>
+            <input class="edit-name" value="${esc(m.name || '')}" placeholder="이름">
+            <label>프로필 사진</label>
+            <input class="edit-photo" type="file" accept="image/*">
+            <button class="btn primary save-person" style="width:100%">인물 정보 저장</button>
+          </div>
+        </div>
+      </article>`;
+    }).join('');
+
+    $('peopleGrid').querySelectorAll('.person').forEach(card => {
+      const id = card.dataset.id;
+      card.querySelectorAll('[data-choice]').forEach(button => {
+        button.addEventListener('click', () => {
+          if (isAdmin) return;
+          answers[id] = answers[id] || {choice:'',reason:''};
+          answers[id].choice = button.dataset.choice;
+          renderPeople();
+        });
+      });
+      const textarea = card.querySelector('textarea');
+      textarea.addEventListener('input', () => {
+        answers[id] = answers[id] || {choice:'',reason:''};
+        answers[id].reason = textarea.value;
+        card.querySelector('.counter').textContent = textarea.value.length + '/150';
+      });
+      if (isAdmin) card.querySelector('.save-person').addEventListener('click', () => savePerson(id, card));
+    });
+  }
+
+  async function loadMembers() {
+    if (!ready) {
+      members = Array.from({length:94}, (_,i) => {
+        const pageNo = i < 4 ? 1 : Math.floor((i-4)/9)+2;
+        const order = i < 4 ? i : (i-4)%9;
+        return {id:'demo-'+i,page_no:pageNo,sort_order:order,name:'',photo_url:null};
+      });
+      status('미리보기 모드입니다. config.js에 Supabase 정보를 연결하면 실제 저장을 사용할 수 있습니다.');
+      renderPeople();
+      return;
+    }
+    const {data,error} = await db.from('members').select('*').order('page_no').order('sort_order');
+    if (error) {
+      status('인물 정보를 불러오지 못했습니다: ' + error.message + ' — Supabase members 테이블의 SELECT 정책을 확인해 주세요.');
+      members = [];
+      renderPeople();
+      return;
+    }
+    members = data || [];
+    renderPeople();
+  }
+
+  async function loadAnswers() {
+    if (!ready || !user) return;
+    const {data,error} = await db.from('responses')
+      .select('member_id,choice,reason')
+      .eq('user_id', user.id);
+    if (error) {
+      status('작성 내용을 불러오지 못했습니다: ' + error.message);
+      return;
+    }
+    (data || []).forEach(row => {
+      answers[row.member_id] = {choice:row.choice || '', reason:row.reason || ''};
+    });
+    renderPeople();
+  }
+
+  async function saveAnswers() {
+    if (!ready) {
+      localStorage.setItem('wolf_lr_answers_preview', JSON.stringify(answers));
+      status('미리보기 작성 내용은 이 기기에 저장했습니다. 실제 공유 저장은 Supabase 연결이 필요합니다.');
+      return;
+    }
+    if (!user) {
+      const {data,error} = await db.auth.signInAnonymously();
+      if (error) { status('참여자 연결 실패: ' + error.message); return; }
+      user = data.user;
+    }
+    const rows = Object.entries(answers).map(([member_id,a]) => ({
+      user_id:user.id, member_id, choice:a.choice || null, reason:a.reason || ''
+    }));
+    if (!rows.length) { status('저장할 작성 내용이 없습니다.'); return; }
+    const {error} = await db.from('responses').upsert(rows, {onConflict:'user_id,member_id'});
+    status(error ? '저장 실패: ' + error.message : '작성 내용을 저장했습니다.');
+  }
+
+  async function savePerson(id, card) {
+    if (!isAdmin || !ready) return;
+    const member = members.find(item => String(item.id) === String(id));
+    const name = card.querySelector('.edit-name').value.trim();
+    const file = card.querySelector('.edit-photo').files[0];
+    let photo_url = member.photo_url;
+
+    if (file) {
+      const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g,'') || 'jpg';
+      const path = `${id}-${Date.now()}.${ext}`;
+      const {error:uploadError} = await db.storage.from('member-photos').upload(path,file,{upsert:true});
+      if (uploadError) { status('사진 업로드 실패: ' + uploadError.message); return; }
+      photo_url = db.storage.from('member-photos').getPublicUrl(path).data.publicUrl;
+    }
+
+    const {error} = await db.from('members').update({name,photo_url}).eq('id',id);
+    if (error) { status('인물 저장 실패: ' + error.message); return; }
+    member.name = name;
+    member.photo_url = photo_url;
+    status('인물 정보를 저장했습니다.');
+    renderPeople();
+  }
+
+  async function initMembers() {
+    if (!isAdmin || !ready) return;
+    const {data:existing,error:readError} = await db.from('members').select('page_no,sort_order');
+    if (readError) { status('기존 인물 목록 확인 실패: ' + readError.message); return; }
+
+    const existingKeys = new Set((existing || []).map(row => `${row.page_no}-${row.sort_order}`));
+    const rows = [];
+    for (let p=1; p<=11; p++) {
+      for (let i=0; i<countForPage(p); i++) {
+        if (!existingKeys.has(`${p}-${i}`)) rows.push({page_no:p,sort_order:i,name:''});
+      }
+    }
+    if (!rows.length) {
+      status('94명 기본 칸이 이미 모두 만들어져 있습니다. 인물 목록을 새로고침합니다.');
+      await loadMembers();
+      return;
+    }
+    const {error} = await db.from('members').insert(rows);
+    if (error) { status('기본 인물 칸 생성 실패: ' + error.message); return; }
+    status(`${rows.length}개의 빈 인물 칸을 추가했습니다.`);
+    await loadMembers();
+  }
+
+  async function login() {
+    if (!ready) { status('먼저 config.js에 Supabase URL과 anon key를 입력해 주세요.'); return; }
+    const {data,error} = await db.auth.signInWithPassword({
+      email:$('email').value.trim(),
+      password:$('password').value
+    });
+    if (error) { status('로그인 실패: ' + error.message); return; }
+    user = data.user;
+    isAdmin = user.app_metadata?.role === 'admin';
+    if (!isAdmin) {
+      await db.auth.signOut();
+      user = null;
+      status('제작자 권한이 없는 계정입니다.');
+      return;
+    }
+    document.body.classList.add('admin');
+    $('adminOpen').style.display = 'none';
+    $('adminLogout').style.display = 'inline-block';
+    $('loginModal').classList.remove('show');
+    status('제작자 모드입니다. 인물 이름과 사진을 관리할 수 있습니다.');
+    renderPeople();
+  }
+
+  $('adminOpen').addEventListener('click', () => $('loginModal').classList.add('show'));
+  $('cancelLogin').addEventListener('click', () => $('loginModal').classList.remove('show'));
+  $('loginBtn').addEventListener('click', login);
+  $('password').addEventListener('keydown', event => { if (event.key === 'Enter') login(); });
+  $('adminLogout').addEventListener('click', async () => {
+    if (db) await db.auth.signOut();
+    user = null; isAdmin = false;
+    document.body.classList.remove('admin');
+    $('adminOpen').style.display = 'inline-block';
+    $('adminLogout').style.display = 'none';
+    renderPeople();
+    status('제작자 모드에서 로그아웃했습니다.');
+  });
+  $('initMembers').addEventListener('click', initMembers);
+  $('refreshMembers').addEventListener('click', loadMembers);
+  $('saveAll').addEventListener('click', saveAnswers);
+
+  $('exportBtn').addEventListener('click', async () => {
+    if (!window.html2canvas) { status('이미지 저장 라이브러리를 불러오지 못했습니다.'); return; }
+    const clone = $('capture').cloneNode(true);
+    clone.classList.add('export-mode');
+    clone.querySelectorAll('.choices,.admin-edit').forEach(element => element.remove());
+    clone.querySelectorAll('textarea').forEach(textarea => {
+      const div = document.createElement('div');
+      div.className = 'export-reason';
+      div.textContent = textarea.value;
+      textarea.replaceWith(div);
+    });
+    clone.style.position = 'fixed';
+    clone.style.left = '-20000px';
+    clone.style.top = '0';
+    clone.style.width = '1500px';
+    clone.style.zIndex = '-1';
+    document.body.appendChild(clone);
+    try {
+      const canvas = await html2canvas(clone, {
+        scale:2, backgroundColor:'#ffffff', useCORS:true,
+        width:1500, windowWidth:1500
+      });
+      const link = document.createElement('a');
+      link.download = `늑페스_왼른_취향표_${page}페이지.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      status('간소화된 PNG 이미지를 저장했습니다.');
+    } catch (error) {
+      status('PNG 저장 실패: ' + error.message);
+    } finally {
+      clone.remove();
     }
   });
-}
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-async function loadMembers(){
-  if(!ready){members=Array.from({length:94},(_,i)=>({id:'demo-'+i,page_no:i<4?1:Math.floor((i-4)/9)+2,sort_order:i<4?i:i-4-(Math.floor((i-4)/9)*9),name:'',photo_url:null}));status('미연결 미리보기입니다. Supabase 설정 후 실제 저장을 사용할 수 있습니다.');renderPeople();return}
-  const {data,error}=await db.from('members').select('*').order('page_no').order('sort_order');
-  if(error){status('인물 정보를 불러오지 못했습니다: '+error.message);return}
-  members=data||[];renderPeople();
-}
-async function loadAnswers(){
-  if(!ready)return;
-  const {data,error}=await db.from('responses').select('member_id,choice,reason').eq('user_id',user?.id||'');
-  if(!error&&data)data.forEach(x=>answers[x.member_id]={choice:x.choice||'',reason:x.reason||''});
-}
-async function saveAnswers(){
-  if(!ready){localStorage.setItem('wolf_lr_answers',JSON.stringify(answers));status('미리보기 작성 내용은 이 기기에 저장했습니다. Supabase 연결 후 공유 저장이 가능합니다.');return}
-  if(!user){const {data,error}=await db.auth.signInAnonymously();if(error){status('익명 참여 연결 실패: '+error.message);return}user=data.user}
-  const rows=Object.entries(answers).map(([member_id,a])=>({user_id:user.id,member_id,choice:a.choice||null,reason:a.reason||''}));
-  if(!rows.length){status('저장할 작성 내용이 없습니다.');return}
-  const {error}=await db.from('responses').upsert(rows,{onConflict:'user_id,member_id'});
-  status(error?'저장 실패: '+error.message:'작성 내용을 저장했습니다.');
-}
-async function savePerson(id,card){
-  if(!isAdmin)return;
-  const m=members.find(x=>x.id===id), name=card.querySelector('.edit-name').value.trim(), file=card.querySelector('.edit-photo').files[0];
-  let photo_url=m.photo_url;
-  if(file){
-    const ext=(file.name.split('.').pop()||'jpg').toLowerCase(), path=`${id}-${Date.now()}.${ext}`;
-    const {error:upErr}=await db.storage.from('member-photos').upload(path,file,{upsert:true});
-    if(upErr){status('사진 업로드 실패: '+upErr.message);return}
-    const {data}=db.storage.from('member-photos').getPublicUrl(path);photo_url=data.publicUrl;
+
+  async function start() {
+    renderPages();
+    if (ready) {
+      const {data,error} = await db.auth.getSession();
+      if (error) status('로그인 상태 확인 실패: ' + error.message);
+      user = data.session?.user || null;
+      isAdmin = !!user && user.app_metadata?.role === 'admin';
+      if (isAdmin) {
+        document.body.classList.add('admin');
+        $('adminOpen').style.display = 'none';
+        $('adminLogout').style.display = 'inline-block';
+      } else if (!user) {
+        const {data:anon,error:anonError} = await db.auth.signInAnonymously();
+        if (anonError) status('참여자 연결 실패: ' + anonError.message);
+        user = anon?.user || null;
+      }
+    } else {
+      try { answers = JSON.parse(localStorage.getItem('wolf_lr_answers_preview') || '{}'); }
+      catch { answers = {}; }
+    }
+    await loadMembers();
+    await loadAnswers();
   }
-  const {error}=await db.from('members').update({name,photo_url}).eq('id',id);
-  if(error){status('인물 저장 실패: '+error.message);return}
-  m.name=name;m.photo_url=photo_url;status('인물 정보를 저장했습니다.');renderPeople();
-}
-async function initMembers(){
-  if(!isAdmin)return;
-  const rows=[];for(let p=1;p<=11;p++)for(let i=0;i<countForPage(p);i++)rows.push({page_no:p,sort_order:i,name:''});
-  const {error}=await db.from('members').insert(rows);
-  if(error){status('기본 인물 칸 생성 실패: '+error.message);return}
-  status('94명의 인물 칸을 만들었습니다.');await loadMembers();
-}
-async function login(){
-  if(!ready){status('먼저 config.js에 Supabase 설정을 입력해 주세요.');return}
-  const {data,error}=await db.auth.signInWithPassword({email:$('email').value,password:$('password').value});
-  if(error){status('로그인 실패: '+error.message);return}
-  user=data.user;isAdmin=user.app_metadata?.role==='admin';
-  if(!isAdmin){await db.auth.signOut();user=null;status('제작자 권한이 없는 계정입니다.');return}
-  document.body.classList.add('admin');$('adminOpen').style.display='none';$('adminLogout').style.display='inline-block';$('loginModal').classList.remove('show');
-  status('제작자 모드입니다.');renderPeople();
-}
-$('adminOpen').onclick=()=>$('loginModal').classList.add('show');
-$('cancelLogin').onclick=()=>$('loginModal').classList.remove('show');
-$('loginBtn').onclick=login;
-$('adminLogout').onclick=async()=>{await db.auth.signOut();user=null;isAdmin=false;document.body.classList.remove('admin');$('adminOpen').style.display='inline-block';$('adminLogout').style.display='none';renderPeople();status('제작자 모드에서 로그아웃했습니다.')};
-$('initMembers').onclick=initMembers;$('refreshMembers').onclick=loadMembers;
-$('saveAll').onclick=saveAnswers;
-$('exportBtn').onclick=async()=>{
-  if(!window.html2canvas){status('이미지 저장 라이브러리를 불러오지 못했습니다.');return}
-  const canvas=await html2canvas($('capture'),{scale:2,backgroundColor:'#ffffff',useCORS:true});
-  const a=document.createElement('a');a.download=`늑페스_왼른_취향표_${page}페이지.png`;a.href=canvas.toDataURL('image/png');a.click();
-};
-async function start(){
-  renderPages();
-  if(ready){
-    const {data}=await db.auth.getSession();user=data.session?.user||null;
-    isAdmin=!!user&&user.app_metadata?.role==='admin';
-    if(isAdmin){document.body.classList.add('admin');$('adminOpen').style.display='none';$('adminLogout').style.display='inline-block'}
-    else if(!user){const {data:anon}=await db.auth.signInAnonymously();user=anon?.user||null}
-  }else{
-    try{answers=JSON.parse(localStorage.getItem('wolf_lr_answers')||'{}')}catch{}
-  }
-  await loadMembers();
-  if(ready)await loadAnswers();
-  renderPeople();
-}
-start();
+
+  start();
 })();
 </script>
 </body>
