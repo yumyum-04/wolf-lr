@@ -2,14 +2,14 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>늑페스 왼른 취향표</title>
-<meta name="description" content="늑페스 왼른 취향표">
+<meta name="description" content="늑페스 왼른 취향표 작성 사이트">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--wine:#52002f;--ink:#250018;--line:#dedede;--muted:#aebfc5;--bg:#f6f5f6}
+:root{--wine:#52002f;--line:#dedede;--muted:#aebfc5;--bg:#f6f5f6}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:#222;font-family:"Noto Sans KR",sans-serif}
 button,input,textarea{font:inherit}button{cursor:pointer}
@@ -56,12 +56,14 @@ button,input,textarea{font:inherit}button{cursor:pointer}
 .modalbox .row{display:flex;gap:8px;justify-content:flex-end}
 .hint{font-size:13px;color:#777;line-height:1.6}
 .empty{grid-column:1/-1;text-align:center;color:#999;padding:50px 10px}
+.export-choice{display:none;width:fit-content;margin:5px 0 8px;padding:5px 14px;border-radius:5px;background:#52002f;color:#fff;font-size:13px;font-weight:800}
 .export-mode{width:1500px!important;max-width:none!important;padding:40px!important;background:#fff!important;border-radius:0!important;box-shadow:none!important}
 .export-mode .grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:34px 30px!important}
 .export-mode .person{display:grid!important;grid-template-columns:112px minmax(0,1fr)!important;gap:14px!important}
 .export-mode .avatar{width:108px!important;height:108px!important}
 .export-mode .choices,.export-mode .admin-edit{display:none!important}
-.export-mode .name{font-size:17px!important;margin-bottom:10px!important}
+.export-mode .export-choice{display:inline-block!important}
+.export-mode .name{font-size:17px!important;margin-bottom:5px!important}
 .export-mode .reason{min-height:112px!important;padding:12px!important;border:2px solid #dedede!important}
 .export-mode .export-reason{font-size:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;min-height:78px;color:#222}
 .export-mode .paper-title{font-size:34px!important;margin-bottom:34px!important}
@@ -69,38 +71,13 @@ button,input,textarea{font:inherit}button{cursor:pointer}
 @media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}.person{grid-template-columns:88px minmax(0,1fr)}.avatar{width:84px;height:84px}}
 @media(max-width:650px){
  .topbar{padding:10px 12px;align-items:flex-start;flex-direction:column}
- .brand{font-size:17px}
- .top-actions{width:100%}.top-actions .btn{flex:1;font-size:13px;padding:10px 8px}
- .wrap{padding:12px 10px 28px;margin:0}
- .paper{padding:25px 14px 20px;border-radius:10px}
- .grid{grid-template-columns:1fr;gap:24px}
- .person{grid-template-columns:78px minmax(0,1fr);gap:11px}
- .avatar{width:74px;height:74px}
- .paper-title{font-size:23px;margin-bottom:24px}
- .name{font-size:15px}
- .reason{min-height:98px}.reason textarea{height:66px}
- .pagebtn{width:40px;height:40px}
+ .brand{font-size:17px}.top-actions{width:100%}.top-actions .btn{flex:1;font-size:13px;padding:10px 8px}
+ .wrap{padding:12px 10px 28px;margin:0}.paper{padding:25px 14px 20px;border-radius:10px}
+ .grid{grid-template-columns:1fr;gap:24px}.person{grid-template-columns:78px minmax(0,1fr);gap:11px}
+ .avatar{width:74px;height:74px}.paper-title{font-size:23px;margin-bottom:24px}
+ .name{font-size:15px}.reason{min-height:98px}.reason textarea{height:66px}.pagebtn{width:40px;height:40px}
 }
 @media print{.topbar,.pagebar,.admin-panel,.status,.choices,.admin-edit{display:none!important}.wrap{margin:0;padding:0;max-width:none}.paper{box-shadow:none;border-radius:0;padding:25px}}
-/* PNG 내보내기 전용 선택 표시 */
-.export-choice {
-  display: none;
-  width: fit-content;
-  margin: 5px 0 8px;
-  padding: 4px 13px;
-  border-radius: 5px;
-  background: #52002f;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 800;
-}
-.export-mode .export-choice {
-  display: inline-block;
-}
-.export-mode .choices,
-.export-mode .gauge-head {
-  display: none !important;
-}
 </style>
 </head>
 <body>
@@ -113,7 +90,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}
     <button class="btn dark" id="exportBtn">현재 페이지 PNG 저장</button>
   </div>
 </header>
-
 <main class="wrap">
   <section class="admin-panel" id="adminPanel">
     <h2>제작자 관리</h2>
@@ -123,9 +99,7 @@ button,input,textarea{font:inherit}button{cursor:pointer}
       <button class="btn" id="refreshMembers">인물 목록 새로고침</button>
     </div>
   </section>
-
   <nav class="pagebar" id="pagebar" aria-label="페이지 선택"></nav>
-
   <section class="paper" id="capture">
     <h1 class="paper-title">늑페스 왼른 취향표</h1>
     <div class="grid" id="peopleGrid"></div>
@@ -133,7 +107,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}
   </section>
   <div class="status" id="status">페이지를 선택하고 취향을 작성해 주세요.</div>
 </main>
-
 <div class="modal" id="loginModal">
   <div class="modalbox">
     <h2>제작자 로그인</h2>
@@ -141,14 +114,10 @@ button,input,textarea{font:inherit}button{cursor:pointer}
     <input id="email" type="email" placeholder="이메일" autocomplete="username">
     <label class="hint">비밀번호</label>
     <input id="password" type="password" placeholder="비밀번호" autocomplete="current-password">
-    <div class="row">
-      <button class="btn" id="cancelLogin">취소</button>
-      <button class="btn primary" id="loginBtn">로그인</button>
-    </div>
+    <div class="row"><button class="btn" id="cancelLogin">취소</button><button class="btn primary" id="loginBtn">로그인</button></div>
     <p class="hint">참여자는 로그인할 필요가 없습니다.</p>
   </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="config.js"></script>
@@ -158,274 +127,195 @@ button,input,textarea{font:inherit}button{cursor:pointer}
   const ready = !!(cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY &&
     !cfg.SUPABASE_URL.includes('YOUR-PROJECT') &&
     !cfg.SUPABASE_ANON_KEY.includes('YOUR_SUPABASE'));
-  const db = ready ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY) : null;
+  const db = ready ? window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_ANON_KEY) : null;
   const $ = id => document.getElementById(id);
-  let page = 1, members = [], answers = {}, user = null, isAdmin = false;
+  let page=1,members=[],answers={},user=null,isAdmin=false;
+  const status = msg => $('status').textContent=msg;
+  const countForPage = p => p===1?4:9;
+  const esc = value => String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-  const status = msg => $('status').textContent = msg;
-  const countForPage = p => p === 1 ? 4 : 9;
-  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[c]));
+  function renderPages(){
+    $('pagebar').innerHTML=Array.from({length:11},(_,i)=>`<button class="pagebtn ${page===i+1?'active':''}" data-page="${i+1}">${i+1}</button>`).join('');
+    $('pagebar').querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=Number(b.dataset.page);renderPages();renderPeople();});
+  }
 
-  function renderPeople() {
-  const list = members
-    .filter(m => Number(m.page_no) === page)
-    .sort((a, b) => a.sort_order - b.sort_order);
-
-  $('peopleGrid').innerHTML = list.map(m => {
-    const a = answers[m.id] || { choice: '', reason: '' };
-
-    return `
-      <article class="person" data-id="${m.id}">
-        ${m.photo_url
-          ? `<img class="avatar" src="${esc(m.photo_url)}" alt="">`
-          : `<div class="avatar avatar-placeholder">＋</div>`
-        }
-
+  function renderPeople(){
+    const list=members.filter(m=>Number(m.page_no)===page).sort((a,b)=>Number(a.sort_order)-Number(b.sort_order));
+    if(!list.length){$('peopleGrid').innerHTML='<div class="empty">등록된 인물이 없습니다.</div>';return;}
+    $('peopleGrid').innerHTML=list.map(m=>{
+      const a=answers[m.id]||{choice:'',reason:''};
+      return `<article class="person" data-id="${esc(m.id)}">
+        ${m.photo_url?`<img class="avatar" src="${esc(m.photo_url)}" alt="">`:'<div class="avatar avatar-placeholder">＋</div>'}
         <div class="person-main">
-          <div class="name">${esc(m.name || '이름 미등록')}</div>
-
-          <div class="export-choice"
-               style="display:none"
-               data-export-choice>
-            ${a.choice === 'L' ? '왼 (L)' :
-              a.choice === 'R' ? '른 (R)' : '미선택'}
-          </div>
-
+          <div class="name">${esc(m.name||'이름 미등록')}</div>
+          <div class="export-choice" data-export-choice></div>
           <div class="choices">
-            <button class="choice ${a.choice === 'L' ? 'selected' : ''}"
-                    data-choice="L">왼 (L)</button>
-            <button class="choice ${a.choice === 'R' ? 'selected' : ''}"
-                    data-choice="R">른 (R)</button>
+            <button class="choice ${a.choice==='L'?'selected':''}" data-choice="L">왼 (L)</button>
+            <button class="choice ${a.choice==='R'?'selected':''}" data-choice="R">른 (R)</button>
           </div>
           <div class="reason">
-            <textarea maxlength="150"
-              placeholder="선택한 이유를 작성해 주세요."
-              ${isAdmin ? 'disabled' : ''}>${esc(a.reason || '')}</textarea>
-            <span class="counter">${(a.reason || '').length}/150</span>
+            <textarea maxlength="150" placeholder="선택한 이유를 작성해 주세요." ${isAdmin?'disabled':''}>${esc(a.reason||'')}</textarea>
+            <span class="counter">${(a.reason||'').length}/150</span>
           </div>
           <div class="admin-edit">
-            <label>인물 이름</label>
-            <input class="edit-name" value="${esc(m.name || '')}" placeholder="이름">
-            <label>프로필 사진</label>
-            <input class="edit-photo" type="file" accept="image/*">
-            <button class="btn primary save-person" style="width:100%">
-              인물 정보 저장
-            </button>
+            <label>인물 이름</label><input class="edit-name" value="${esc(m.name||'')}" placeholder="이름">
+            <label>프로필 사진</label><input class="edit-photo" type="file" accept="image/*">
+            <button class="btn primary save-person" style="width:100%">인물 정보 저장</button>
           </div>
         </div>
-      </article>
-    `;
-  }).join('');
-  $('peopleGrid').querySelectorAll('.person').forEach(card => {
-    const id = card.dataset.id;
-    card.querySelectorAll('[data-choice]').forEach(b => {
-      b.onclick = () => {
-        if (isAdmin) return;
-        answers[id] = answers[id] || { choice: '', reason: '' };
-        answers[id].choice = b.dataset.choice;
-        renderPeople();
+      </article>`;
+    }).join('');
+    $('peopleGrid').querySelectorAll('.person').forEach(card=>{
+      const id=card.dataset.id;
+      card.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{
+        if(isAdmin)return;
+        answers[id]=answers[id]||{choice:'',reason:''};answers[id].choice=b.dataset.choice;renderPeople();
+      });
+      const ta=card.querySelector('textarea');
+      ta.oninput=()=>{
+        answers[id]=answers[id]||{choice:'',reason:''};answers[id].reason=ta.value;
+        card.querySelector('.counter').textContent=ta.value.length+'/150';
       };
+      if(isAdmin){card.querySelector('.save-person').onclick=()=>savePerson(id,card);card.querySelectorAll('[data-choice]').forEach(b=>b.disabled=true);}
     });
-    const ta = card.querySelector('textarea');
-    ta.oninput = () => {
-      answers[id] = answers[id] || { choice: '', reason: '' };
-      answers[id].reason = ta.value;
-      card.querySelector('.counter').textContent =
-        ta.value.length + '/150';
-    };
-    if (isAdmin) {
-      card.querySelector('.save-person').onclick =
-        () => savePerson(id, card);
-      card.querySelectorAll('[data-choice]').forEach(b => b.disabled = true);
-    }
-  });
-}
-  async function loadMembers() {
-    if (!ready) {
-      members = Array.from({length:94}, (_,i) => {
-        const pageNo = i < 4 ? 1 : Math.floor((i-4)/9)+2;
-        const order = i < 4 ? i : (i-4)%9;
-        return {id:'demo-'+i,page_no:pageNo,sort_order:order,name:'',photo_url:null};
-      });
+  }
+
+  async function loadMembers(){
+    if(!ready){
+      members=Array.from({length:94},(_,i)=>({id:'demo-'+i,page_no:i<4?1:Math.floor((i-4)/9)+2,sort_order:i<4?i:(i-4)%9,name:'',photo_url:null}));
+      try{answers=JSON.parse(localStorage.getItem('wolf_lr_answers_preview')||'{}');}catch{answers={};}
       status('미리보기 모드입니다. config.js에 Supabase 정보를 연결하면 실제 저장을 사용할 수 있습니다.');
-      renderPeople();
-      return;
+      renderPeople();return;
     }
-    const {data,error} = await db.from('members').select('*').order('page_no').order('sort_order');
-    if (error) {
-      status('인물 정보를 불러오지 못했습니다: ' + error.message + ' — Supabase members 테이블의 SELECT 정책을 확인해 주세요.');
-      members = [];
-      renderPeople();
-      return;
-    }
-    members = data || [];
+    const {data,error}=await db.from('members').select('*').order('page_no').order('sort_order');
+    if(error){status('인물 정보를 불러오지 못했습니다: '+error.message);return;}
+    members=data||[];renderPeople();
+  }
+
+  async function loadAnswers(){
+    if(!ready||!user)return;
+    const {data,error}=await db.from('responses').select('member_id,choice,reason').eq('user_id',user.id);
+    if(error){status('작성 내용을 불러오지 못했습니다: '+error.message);return;}
+    (data||[]).forEach(r=>answers[r.member_id]={choice:r.choice||'',reason:r.reason||''});
     renderPeople();
   }
-  async function loadAnswers() {
-    if (!ready || !user) return;
-    const {data,error} = await db.from('responses')
-      .select('member_id,choice,reason')
-      .eq('user_id', user.id);
-    if (error) {
-      status('작성 내용을 불러오지 못했습니다: ' + error.message);
-      return;
-    }
-    (data || []).forEach(row => {
-      answers[row.member_id] = {choice:row.choice || '', reason:row.reason || ''};
-    });
-    renderPeople();
+
+  async function saveAnswers(){
+    if(!ready){localStorage.setItem('wolf_lr_answers_preview',JSON.stringify(answers));status('작성 내용을 이 기기에 저장했습니다.');return;}
+    if(!user){const {data,error}=await db.auth.signInAnonymously();if(error){status('참여자 연결 실패: '+error.message);return;}user=data.user;}
+    const rows=Object.entries(answers).map(([member_id,a])=>({user_id:user.id,member_id,choice:a.choice||null,reason:a.reason||''}));
+    if(!rows.length){status('저장할 작성 내용이 없습니다.');return;}
+    const {error}=await db.from('responses').upsert(rows,{onConflict:'user_id,member_id'});
+    status(error?'저장 실패: '+error.message:'작성 내용을 저장했습니다.');
   }
-  async function saveAnswers() {
-    if (!ready) {
-      localStorage.setItem('wolf_lr_answers_preview', JSON.stringify(answers));
-      status('미리보기 작성 내용은 이 기기에 저장했습니다. 실제 공유 저장은 Supabase 연결이 필요합니다.');
-      return;
+
+  async function savePerson(id,card){
+    if(!isAdmin||!ready)return;
+    const m=members.find(x=>String(x.id)===String(id));
+    const name=card.querySelector('.edit-name').value.trim(),file=card.querySelector('.edit-photo').files[0];
+    let photo_url=m.photo_url;
+    if(file){
+      const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
+      const path=`${id}-${Date.now()}.${ext}`;
+      const {error}=await db.storage.from('member-photos').upload(path,file,{upsert:true});
+      if(error){status('사진 업로드 실패: '+error.message);return;}
+      photo_url=db.storage.from('member-photos').getPublicUrl(path).data.publicUrl;
     }
-    if (!user) {
-      const {data,error} = await db.auth.signInAnonymously();
-      if (error) { status('참여자 연결 실패: ' + error.message); return; }
-      user = data.user;
-    }
-    const rows = Object.entries(answers).map(([member_id,a]) => ({
-      user_id:user.id, member_id, choice:a.choice || null, reason:a.reason || ''
-    }));
-    if (!rows.length) { status('저장할 작성 내용이 없습니다.'); return; }
-    const {error} = await db.from('responses').upsert(rows, {onConflict:'user_id,member_id'});
-    status(error ? '저장 실패: ' + error.message : '작성 내용을 저장했습니다.');
+    const {error}=await db.from('members').update({name,photo_url}).eq('id',id);
+    if(error){status('인물 저장 실패: '+error.message);return;}
+    m.name=name;m.photo_url=photo_url;status('인물 정보를 저장했습니다.');renderPeople();
   }
-  async function savePerson(id, card) {
-    if (!isAdmin || !ready) return;
-    const member = members.find(item => String(item.id) === String(id));
-    const name = card.querySelector('.edit-name').value.trim();
-    const file = card.querySelector('.edit-photo').files[0];
-    let photo_url = member.photo_url;
-    if (file) {
-      const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g,'') || 'jpg';
-      const path = `${id}-${Date.now()}.${ext}`;
-      const {error:uploadError} = await db.storage.from('member-photos').upload(path,file,{upsert:true});
-      if (uploadError) { status('사진 업로드 실패: ' + uploadError.message); return; }
-      photo_url = db.storage.from('member-photos').getPublicUrl(path).data.publicUrl;
-    }
-    const {error} = await db.from('members').update({name,photo_url}).eq('id',id);
-    if (error) { status('인물 저장 실패: ' + error.message); return; }
-    member.name = name;
-    member.photo_url = photo_url;
-    status('인물 정보를 저장했습니다.');
-    renderPeople();
+
+  async function initMembers(){
+    if(!isAdmin||!ready)return;
+    const {data:existing,error:readError}=await db.from('members').select('page_no,sort_order');
+    if(readError){status('기존 인물 목록 확인 실패: '+readError.message);return;}
+    const keys=new Set((existing||[]).map(r=>`${r.page_no}-${r.sort_order}`)),rows=[];
+    for(let p=1;p<=11;p++)for(let i=0;i<countForPage(p);i++)if(!keys.has(`${p}-${i}`))rows.push({page_no:p,sort_order:i,name:''});
+    if(!rows.length){status('94명 기본 칸이 이미 만들어져 있습니다.');await loadMembers();return;}
+    const {error}=await db.from('members').insert(rows);
+    if(error){status('기본 인물 칸 생성 실패: '+error.message);return;}
+    status(`${rows.length}개의 빈 인물 칸을 추가했습니다.`);await loadMembers();
   }
-  async function initMembers() {
-    if (!isAdmin || !ready) return;
-    const {data:existing,error:readError} = await db.from('members').select('page_no,sort_order');
-    if (readError) { status('기존 인물 목록 확인 실패: ' + readError.message); return; }
-    const existingKeys = new Set((existing || []).map(row => `${row.page_no}-${row.sort_order}`));
-    const rows = [];
-    for (let p=1; p<=11; p++) {
-      for (let i=0; i<countForPage(p); i++) {
-        if (!existingKeys.has(`${p}-${i}`)) rows.push({page_no:p,sort_order:i,name:''});
-      }
-    }
-    if (!rows.length) {
-      status('94명 기본 칸이 이미 모두 만들어져 있습니다. 인물 목록을 새로고침합니다.');
-      await loadMembers();
-      return;
-    }
-    const {error} = await db.from('members').insert(rows);
-    if (error) { status('기본 인물 칸 생성 실패: ' + error.message); return; }
-    status(`${rows.length}개의 빈 인물 칸을 추가했습니다.`);
-    await loadMembers();
+
+  async function login(){
+    if(!ready){status('먼저 config.js의 Supabase 정보를 확인해 주세요.');return;}
+    const {data,error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});
+    if(error){status('로그인 실패: '+error.message);return;}
+    user=data.user;isAdmin=user.app_metadata?.role==='admin';
+    if(!isAdmin){await db.auth.signOut();user=null;status('제작자 권한이 없는 계정입니다.');return;}
+    document.body.classList.add('admin');$('adminOpen').style.display='none';$('adminLogout').style.display='inline-block';
+    $('loginModal').classList.remove('show');status('제작자 모드입니다.');renderPeople();
   }
-  async function login() {
-    if (!ready) { status('먼저 config.js에 Supabase URL과 anon key를 입력해 주세요.'); return; }
-    const {data,error} = await db.auth.signInWithPassword({
-      email:$('email').value.trim(),
-      password:$('password').value
-    });
-    if (error) { status('로그인 실패: ' + error.message); return; }
-    user = data.user;
-    isAdmin = user.app_metadata?.role === 'admin';
-    if (!isAdmin) {
-      await db.auth.signOut();
-      user = null;
-      status('제작자 권한이 없는 계정입니다.');
-      return;
-    }
-    document.body.classList.add('admin');
-    $('adminOpen').style.display = 'none';
-    $('adminLogout').style.display = 'inline-block';
-    $('loginModal').classList.remove('show');
-    status('제작자 모드입니다. 인물 이름과 사진을 관리할 수 있습니다.');
-    renderPeople();
-  }
-  $('adminOpen').addEventListener('click', () => $('loginModal').classList.add('show'));
-  $('cancelLogin').addEventListener('click', () => $('loginModal').classList.remove('show'));
-  $('loginBtn').addEventListener('click', login);
-  $('password').addEventListener('keydown', event => { if (event.key === 'Enter') login(); });
-  $('adminLogout').addEventListener('click', async () => {
-    if (db) await db.auth.signOut();
-    user = null; isAdmin = false;
-    document.body.classList.remove('admin');
-    $('adminOpen').style.display = 'inline-block';
-    $('adminLogout').style.display = 'none';
-    renderPeople();
-    status('제작자 모드에서 로그아웃했습니다.');
-  });
-  $('initMembers').addEventListener('click', initMembers);
-  $('refreshMembers').addEventListener('click', loadMembers);
-  $('saveAll').addEventListener('click', saveAnswers);
-  $('exportBtn').addEventListener('click', async () => {
-    if (!window.html2canvas) { status('이미지 저장 라이브러리를 불러오지 못했습니다.'); return; }
-    const clone = $('capture').cloneNode(true);
+
+  $('adminOpen').onclick=()=>$('loginModal').classList.add('show');
+  $('cancelLogin').onclick=()=>$('loginModal').classList.remove('show');
+  $('loginBtn').onclick=login;
+  $('password').addEventListener('keydown',e=>{if(e.key==='Enter')login();});
+  $('adminLogout').onclick=async()=>{
+    if(db)await db.auth.signOut();user=null;isAdmin=false;document.body.classList.remove('admin');
+    $('adminOpen').style.display='inline-block';$('adminLogout').style.display='none';renderPeople();status('로그아웃했습니다.');
+  };
+  $('initMembers').onclick=initMembers;
+  $('refreshMembers').onclick=loadMembers;
+  $('saveAll').onclick=saveAnswers;
+
+  // PNG 내보내기: 원본 화면이 아닌 별도 복제본에 선택 결과를 직접 표시합니다.
+  $('exportBtn').onclick=async()=>{
+    if(!window.html2canvas){status('PNG 저장 라이브러리를 불러오지 못했습니다.');return;}
+    const clone=$('capture').cloneNode(true);
     clone.classList.add('export-mode');
-    clone.querySelectorAll('.choices,.admin-edit').forEach(element => element.remove());
-    clone.querySelectorAll('textarea').forEach(textarea => {
-      const div = document.createElement('div');
-      div.className = 'export-reason';
-      div.textContent = textarea.value;
-      textarea.replaceWith(div);
+
+    clone.querySelectorAll('.person').forEach(card=>{
+      const id=card.dataset.id;
+      const choice=answers[id]?.choice||'';
+      const badge=card.querySelector('[data-export-choice]');
+      if(badge){
+        badge.textContent=choice==='L'?'왼 (L)':choice==='R'?'른 (R)':'미선택';
+        badge.style.removeProperty('display');
+        badge.style.display='inline-block';
+      }
+      card.querySelectorAll('.choices,.admin-edit').forEach(el=>el.remove());
+      const textarea=card.querySelector('textarea');
+      if(textarea){
+        const reason=document.createElement('div');
+        reason.className='export-reason';
+        reason.textContent=textarea.value;
+        textarea.replaceWith(reason);
+      }
     });
-    clone.style.position = 'fixed';
-    clone.style.left = '-20000px';
-    clone.style.top = '0';
-    clone.style.width = '1500px';
-    clone.style.zIndex = '-1';
+
+    clone.style.position='fixed';
+    clone.style.left='-20000px';
+    clone.style.top='0';
+    clone.style.width='1500px';
+    clone.style.zIndex='-1';
     document.body.appendChild(clone);
-    try {
-      const canvas = await html2canvas(clone, {
-        scale:2, backgroundColor:'#ffffff', useCORS:true,
-        width:1500, windowWidth:1500
-      });
-      const link = document.createElement('a');
-      link.download = `늑페스_왼른_취향표_${page}페이지.png`;
-      link.href = canvas.toDataURL('image/png');
+
+    try{
+      await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+      const canvas=await html2canvas(clone,{scale:2,backgroundColor:'#fff',useCORS:true,width:1500,windowWidth:1500});
+      const link=document.createElement('a');
+      link.download=`늑페스_왼른_취향표_${page}페이지.png`;
+      link.href=canvas.toDataURL('image/png');
       link.click();
-      status('간소화된 PNG 이미지를 저장했습니다.');
-    } catch (error) {
-      status('PNG 저장 실패: ' + error.message);
-    } finally {
+      status('왼·른 선택 결과가 포함된 PNG를 저장했습니다.');
+    }catch(error){
+      status('PNG 저장 실패: '+error.message);
+    }finally{
       clone.remove();
     }
-  });
-  async function start() {
+  };
+
+  async function start(){
     renderPages();
-    if (ready) {
-      const {data,error} = await db.auth.getSession();
-      if (error) status('로그인 상태 확인 실패: ' + error.message);
-      user = data.session?.user || null;
-      isAdmin = !!user && user.app_metadata?.role === 'admin';
-      if (isAdmin) {
-        document.body.classList.add('admin');
-        $('adminOpen').style.display = 'none';
-        $('adminLogout').style.display = 'inline-block';
-      } else if (!user) {
-        const {data:anon,error:anonError} = await db.auth.signInAnonymously();
-        if (anonError) status('참여자 연결 실패: ' + anonError.message);
-        user = anon?.user || null;
-      }
-    } else {
-      try { answers = JSON.parse(localStorage.getItem('wolf_lr_answers_preview') || '{}'); }
-      catch { answers = {}; }
+    if(ready){
+      const {data,error}=await db.auth.getSession();
+      if(error)status('로그인 상태 확인 실패: '+error.message);
+      user=data.session?.user||null;
+      isAdmin=!!user&&user.app_metadata?.role==='admin';
+      if(isAdmin){document.body.classList.add('admin');$('adminOpen').style.display='none';$('adminLogout').style.display='inline-block';}
+      else if(!user){const {data:anon,error:anonError}=await db.auth.signInAnonymously();if(anonError)status('참여자 연결 실패: '+anonError.message);user=anon?.user||null;}
     }
     await loadMembers();
     await loadAnswers();
