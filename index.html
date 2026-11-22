@@ -82,6 +82,25 @@ button,input,textarea{font:inherit}button{cursor:pointer}
  .pagebtn{width:40px;height:40px}
 }
 @media print{.topbar,.pagebar,.admin-panel,.status,.choices,.admin-edit{display:none!important}.wrap{margin:0;padding:0;max-width:none}.paper{box-shadow:none;border-radius:0;padding:25px}}
+/* PNG 내보내기 전용 선택 표시 */
+.export-choice {
+  display: none;
+  width: fit-content;
+  margin: 5px 0 8px;
+  padding: 4px 13px;
+  border-radius: 5px;
+  background: #52002f;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+.export-mode .export-choice {
+  display: inline-block;
+}
+.export-mode .choices,
+.export-mode .gauge-head {
+  display: none !important;
+}
 </style>
 </head>
 <body>
