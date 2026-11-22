@@ -168,76 +168,80 @@ button,input,textarea{font:inherit}button{cursor:pointer}
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[c]));
 
-  function renderPages() {
-    $('pagebar').innerHTML = Array.from({length:11}, (_,i) =>
-      `<button class="pagebtn ${page===i+1?'active':''}" data-page="${i+1}">${i+1}</button>`
-    ).join('');
-    $('pagebar').querySelectorAll('button').forEach(button => {
-      button.addEventListener('click', () => {
-        page = Number(button.dataset.page);
-        renderPages();
-        renderPeople();
-      });
-    });
-  }
-
   function renderPeople() {
-    const list = members.filter(m => Number(m.page_no) === page)
-      .sort((a,b) => Number(a.sort_order)-Number(b.sort_order));
+  const list = members
+    .filter(m => Number(m.page_no) === page)
+    .sort((a, b) => a.sort_order - b.sort_order);
 
-    if (!list.length) {
-      $('peopleGrid').innerHTML = '<div class="empty">아직 인물 칸이 없습니다.</div>';
-      return;
-    }
+  $('peopleGrid').innerHTML = list.map(m => {
+    const a = answers[m.id] || { choice: '', reason: '' };
 
-    $('peopleGrid').innerHTML = list.map(m => {
-      const answer = answers[m.id] || {choice:'', reason:''};
-      const photo = m.photo_url
-        ? `<img class="avatar" src="${esc(m.photo_url)}" alt="${esc(m.name || '')}">`
-        : '<div class="avatar avatar-placeholder">＋</div>';
-      return `<article class="person" data-id="${esc(m.id)}">
-        ${photo}
+    return `
+      <article class="person" data-id="${m.id}">
+        ${m.photo_url
+          ? `<img class="avatar" src="${esc(m.photo_url)}" alt="">`
+          : `<div class="avatar avatar-placeholder">＋</div>`
+        }
+
         <div class="person-main">
           <div class="name">${esc(m.name || '이름 미등록')}</div>
+
+          <div class="export-choice"
+               style="display:none"
+               data-export-choice>
+            ${a.choice === 'L' ? '왼 (L)' :
+              a.choice === 'R' ? '른 (R)' : '미선택'}
+          </div>
+
           <div class="choices">
-            <button class="choice ${answer.choice==='L'?'selected':''}" data-choice="L" ${isAdmin?'disabled':''}>왼 (L)</button>
-            <button class="choice ${answer.choice==='R'?'selected':''}" data-choice="R" ${isAdmin?'disabled':''}>른 (R)</button>
+            <button class="choice ${a.choice === 'L' ? 'selected' : ''}"
+                    data-choice="L">왼 (L)</button>
+            <button class="choice ${a.choice === 'R' ? 'selected' : ''}"
+                    data-choice="R">른 (R)</button>
           </div>
           <div class="reason">
-            <textarea maxlength="150" placeholder="선택한 이유를 작성해 주세요." ${isAdmin?'disabled':''}>${esc(answer.reason || '')}</textarea>
-            <span class="counter">${(answer.reason || '').length}/150</span>
+            <textarea maxlength="150"
+              placeholder="선택한 이유를 작성해 주세요."
+              ${isAdmin ? 'disabled' : ''}>${esc(a.reason || '')}</textarea>
+            <span class="counter">${(a.reason || '').length}/150</span>
           </div>
           <div class="admin-edit">
             <label>인물 이름</label>
             <input class="edit-name" value="${esc(m.name || '')}" placeholder="이름">
             <label>프로필 사진</label>
             <input class="edit-photo" type="file" accept="image/*">
-            <button class="btn primary save-person" style="width:100%">인물 정보 저장</button>
+            <button class="btn primary save-person" style="width:100%">
+              인물 정보 저장
+            </button>
           </div>
         </div>
-      </article>`;
-    }).join('');
-
-    $('peopleGrid').querySelectorAll('.person').forEach(card => {
-      const id = card.dataset.id;
-      card.querySelectorAll('[data-choice]').forEach(button => {
-        button.addEventListener('click', () => {
-          if (isAdmin) return;
-          answers[id] = answers[id] || {choice:'',reason:''};
-          answers[id].choice = button.dataset.choice;
-          renderPeople();
-        });
-      });
-      const textarea = card.querySelector('textarea');
-      textarea.addEventListener('input', () => {
-        answers[id] = answers[id] || {choice:'',reason:''};
-        answers[id].reason = textarea.value;
-        card.querySelector('.counter').textContent = textarea.value.length + '/150';
-      });
-      if (isAdmin) card.querySelector('.save-person').addEventListener('click', () => savePerson(id, card));
+      </article>
+    `;
+  }).join('');
+  $('peopleGrid').querySelectorAll('.person').forEach(card => {
+    const id = card.dataset.id;
+    card.querySelectorAll('[data-choice]').forEach(b => {
+      b.onclick = () => {
+        if (isAdmin) return;
+        answers[id] = answers[id] || { choice: '', reason: '' };
+        answers[id].choice = b.dataset.choice;
+        renderPeople();
+      };
     });
-  }
-
+    const ta = card.querySelector('textarea');
+    ta.oninput = () => {
+      answers[id] = answers[id] || { choice: '', reason: '' };
+      answers[id].reason = ta.value;
+      card.querySelector('.counter').textContent =
+        ta.value.length + '/150';
+    };
+    if (isAdmin) {
+      card.querySelector('.save-person').onclick =
+        () => savePerson(id, card);
+      card.querySelectorAll('[data-choice]').forEach(b => b.disabled = true);
+    }
+  });
+}
   async function loadMembers() {
     if (!ready) {
       members = Array.from({length:94}, (_,i) => {
@@ -259,7 +263,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}
     members = data || [];
     renderPeople();
   }
-
   async function loadAnswers() {
     if (!ready || !user) return;
     const {data,error} = await db.from('responses')
@@ -274,7 +277,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}
     });
     renderPeople();
   }
-
   async function saveAnswers() {
     if (!ready) {
       localStorage.setItem('wolf_lr_answers_preview', JSON.stringify(answers));
@@ -293,14 +295,12 @@ button,input,textarea{font:inherit}button{cursor:pointer}
     const {error} = await db.from('responses').upsert(rows, {onConflict:'user_id,member_id'});
     status(error ? '저장 실패: ' + error.message : '작성 내용을 저장했습니다.');
   }
-
   async function savePerson(id, card) {
     if (!isAdmin || !ready) return;
     const member = members.find(item => String(item.id) === String(id));
     const name = card.querySelector('.edit-name').value.trim();
     const file = card.querySelector('.edit-photo').files[0];
     let photo_url = member.photo_url;
-
     if (file) {
       const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g,'') || 'jpg';
       const path = `${id}-${Date.now()}.${ext}`;
@@ -308,7 +308,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}
       if (uploadError) { status('사진 업로드 실패: ' + uploadError.message); return; }
       photo_url = db.storage.from('member-photos').getPublicUrl(path).data.publicUrl;
     }
-
     const {error} = await db.from('members').update({name,photo_url}).eq('id',id);
     if (error) { status('인물 저장 실패: ' + error.message); return; }
     member.name = name;
@@ -316,12 +315,10 @@ button,input,textarea{font:inherit}button{cursor:pointer}
     status('인물 정보를 저장했습니다.');
     renderPeople();
   }
-
   async function initMembers() {
     if (!isAdmin || !ready) return;
     const {data:existing,error:readError} = await db.from('members').select('page_no,sort_order');
     if (readError) { status('기존 인물 목록 확인 실패: ' + readError.message); return; }
-
     const existingKeys = new Set((existing || []).map(row => `${row.page_no}-${row.sort_order}`));
     const rows = [];
     for (let p=1; p<=11; p++) {
@@ -339,7 +336,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}
     status(`${rows.length}개의 빈 인물 칸을 추가했습니다.`);
     await loadMembers();
   }
-
   async function login() {
     if (!ready) { status('먼저 config.js에 Supabase URL과 anon key를 입력해 주세요.'); return; }
     const {data,error} = await db.auth.signInWithPassword({
@@ -362,7 +358,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}
     status('제작자 모드입니다. 인물 이름과 사진을 관리할 수 있습니다.');
     renderPeople();
   }
-
   $('adminOpen').addEventListener('click', () => $('loginModal').classList.add('show'));
   $('cancelLogin').addEventListener('click', () => $('loginModal').classList.remove('show'));
   $('loginBtn').addEventListener('click', login);
@@ -379,7 +374,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}
   $('initMembers').addEventListener('click', initMembers);
   $('refreshMembers').addEventListener('click', loadMembers);
   $('saveAll').addEventListener('click', saveAnswers);
-
   $('exportBtn').addEventListener('click', async () => {
     if (!window.html2canvas) { status('이미지 저장 라이브러리를 불러오지 못했습니다.'); return; }
     const clone = $('capture').cloneNode(true);
@@ -413,7 +407,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}
       clone.remove();
     }
   });
-
   async function start() {
     renderPages();
     if (ready) {
@@ -437,7 +430,6 @@ button,input,textarea{font:inherit}button{cursor:pointer}
     await loadMembers();
     await loadAnswers();
   }
-
   start();
 })();
 </script>
